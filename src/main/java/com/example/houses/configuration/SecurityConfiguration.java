@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.User;
@@ -29,7 +30,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .headers(headersConfigurer ->headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
@@ -37,6 +38,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/houses/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/houses/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/houses/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                         .logout(LogoutConfigurer::permitAll)
                         .httpBasic(withDefaults());

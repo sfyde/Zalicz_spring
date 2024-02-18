@@ -25,7 +25,13 @@ public class HouseServiceDao implements HouseService{
             throw new IllegalArgumentException("Address is empty");
         }
         if (house.getPrice()<0) {
-            throw new IllegalArgumentException("Price can be set bellow 0");
+            throw new IllegalArgumentException("Price can't be set bellow 0");
+        }
+        if (house.getSize()<0) {
+            throw new IllegalArgumentException("Size can't be set bellow 0");
+        }
+        if (house.getRooms()<0) {
+            throw new IllegalArgumentException("Number of rooms can't be set bellow 0");
         }
         House newHouse = new House();
         newHouse.setId(houses.size()+1);

@@ -5,6 +5,7 @@ import com.example.houses.entity.HouseData;
 import com.example.houses.services.HouseService;
 import com.example.houses.services.HouseServiceDao;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
